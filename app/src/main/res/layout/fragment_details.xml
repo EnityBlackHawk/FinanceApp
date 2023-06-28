@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.blackhawk.finance.viewModel.EntryViewModel" />
+    </data>
+
+<LinearLayout
+    android:id="@+id/list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="20dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <TextView
+        android:id="@+id/entryName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        tools:text="Entry name"
+        />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:stretchColumns="1"
+        tools:layout_editor_absoluteX="10dp"
+        tools:layout_editor_absoluteY="20dp">
+
+
+        <TableRow>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:text="Valor"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:id="@+id/textValue"
+                android:textAlignment="textEnd"
+                tools:text="R$10.00"
+                android:textSize="20sp"
+                android:textColor="@color/creditColor"
+                />
+        </TableRow>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/isCredit"
+            android:checked="false"
+            android:clickable="false"
+            android:text="Entrada de valor"
+            android:textSize="15sp"
+            app:trackTint="@color/primaryVariant" />
+
+        <Button
+            android:id="@+id/deleteBtn"
+            android:backgroundTint="@color/debitColor"
+            android:text="Deletar"
+            android:textColor="@color/white" />
+
+
+    </TableLayout>
+
+</LinearLayout>
+
+</layout>

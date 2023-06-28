@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.blackhawk.finance.viewModel.EntryViewModel" />
+
+        <variable
+            name="adapterObject"
+            type="com.blackhawk.finance.adapter.EntryAdapter" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".MainActivity">
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:background="@drawable/rect_banner"
+            android:backgroundTint="@color/primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/balanceRect"
+            android:elevation="10dp"
+            />
+
+        <TextView
+            android:id="@+id/balanceText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="R$100,00"
+            android:text="@{@string/balance(viewModel.balance)}"
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-black"
+            android:textFontWeight="1000"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/balanceRect"
+            app:layout_constraintBottom_toBottomOf="@+id/balanceRect"
+            android:elevation="20dp"
+            android:paddingStart="10dp"
+            android:paddingBottom="10dp"
+
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:scrollbars="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:adapter="@{adapterObject}"
+            app:layout_constraintTop_toBottomOf="@+id/balanceRect" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="16dp"
+            app:srcCompat="@drawable/ic_dialog_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:backgroundTint="@color/primary"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

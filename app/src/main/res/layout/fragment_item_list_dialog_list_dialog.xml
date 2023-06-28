@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="20dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nova entrada"
+        android:textSize="25sp"
+
+        />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:stretchColumns="1"
+        tools:layout_editor_absoluteX="10dp"
+        tools:layout_editor_absoluteY="20dp">
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Nome"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/entryName"
+                android:maxLines="1"
+                android:imeOptions="actionNext"
+                />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:text="Valor"
+
+                />
+
+            <EditText
+                android:id="@+id/entryValue"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:imeOptions="actionDone"
+                />
+        </TableRow>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/isCredit"
+            android:checked="false"
+            android:text="Entrada de valor"
+            android:textSize="15sp"
+            app:trackTint="@color/primaryVariant" />
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:backgroundTint="@color/primary"
+            android:text="Salvar"
+            android:textColor="@color/white" />
+
+
+    </TableLayout>
+
+</LinearLayout>
