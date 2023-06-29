@@ -7,19 +7,31 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources.getColorStateList
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.blackhawk.finance.R
 import com.blackhawk.finance.model.Entry
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class EntryAdapter(
     private val context: Context,
-    private val data: MutableList<Entry>
-) : RecyclerView.Adapter<EntryAdapter.EntryViewHolder>()
+    var onItemClick: ((Int) -> Unit)?=null
+) : ListAdapter<Entry, EntryAdapter.EntryViewHolder>(DiffCallback)
 {
 
-    var onItemClick: ((Int) -> Unit)?=null
+    companion object{
+        private val DiffCallback = object : DiffUtil.ItemCallback<Entry>() {
+            override fun areItemsTheSame(oldItem: Entry, newItem: Entry): Boolean
+                    = oldItem.id == newItem.id
+
+            override fun areContentsTheSame(oldItem: Entry, newItem: Entry): Boolean
+                    = oldItem == newItem
+
+        }
+    }
 
     class EntryViewHolder(view: View?) : RecyclerView.ViewHolder(view!!)
     {
@@ -28,15 +40,23 @@ class EntryAdapter(
         val entryDate: TextView
         val entryValue: TextView
 
+
         init {
             if(view == null)
                 throw RuntimeException("View was null")
-            entryTag = view.findViewById(R.id.entryName)
-            entryDate = view.findViewById(R.id.entryDate)
+            entryTag   = view.findViewById(R.id.entryName)
+            entryDate  = view.findViewById(R.id.entryDate)
             entryValue = view.findViewById(R.id.entryValue)
-
         }
 
+        fun bind(entry: Entry, context: Context)
+        {
+            entryTag.text = entry.tag
+            entryDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date(entry.date))
+            entryValue.text = context.resources?.getString(R.string.balance, entry.value)
+            if(entry.isCredit)
+                entryValue.setTextColor(getColorStateList(context, R.color.creditColor))
+        }
 
     }
 
@@ -46,20 +66,9 @@ class EntryAdapter(
         return EntryViewHolder(adapter)
     }
 
-    override fun getItemCount(): Int {
-        return data.size
-    }
-
     override fun onBindViewHolder(holder: EntryViewHolder, position: Int) {
-        val item = data[position]
-        holder.apply {
-            entryTag.text = item.tag
-            entryDate.text = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(item.date)
-            entryValue.text = context.resources?.getString(R.string.balance, item.value)
-            if(item.isCredit)
-                entryValue.setTextColor(getColorStateList(context, R.color.creditColor))
-        }
 
+        holder.bind(getItem(position), context)
         holder.itemView.setOnClickListener {
             onItemClick?.invoke(position)
         }

@@ -1,27 +1,33 @@
 package com.blackhawk.finance
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.blackhawk.finance.adapter.EntryAdapter
 import com.blackhawk.finance.databinding.FragmentMainBinding
 import com.blackhawk.finance.viewModel.EntryViewModel
+import com.blackhawk.finance.viewModel.EntryViewModelFactory
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+
 
 
 class MainFragment : Fragment() {
 
 
     private lateinit var binding: FragmentMainBinding
-    private val viewModel: EntryViewModel by activityViewModels()
+    private val viewModel: EntryViewModel by activityViewModels {
+        EntryViewModelFactory(
+            (activity?.application as FinanceApplication).database.entryDao()
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,24 +40,26 @@ class MainFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentMainBinding.inflate(inflater, container, false)
-        //binding.recyclerView.adapter = EntryAdapter(requireContext(), DataSource.data)
         binding.viewModel = viewModel
+        return binding.root
+    }
 
-        val adapter = EntryAdapter(requireContext(), viewModel.entryList.value!!)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val adapter = EntryAdapter(requireContext())
+        lifecycleScope.launch {
+            viewModel.getAll().collect {
+                adapter.submitList(it)
+            }
+        }
+
 
         adapter.onItemClick = {
             openDetails(it)
         }
 
         binding.adapterObject = adapter
-
-
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_itemListDialogFragment)
