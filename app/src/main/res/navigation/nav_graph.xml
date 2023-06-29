@@ -31,5 +31,6 @@
         <action
             android:id="@+id/action_detailsFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <argument android:name="selectedEntry" />
     </dialog>
 </navigation>

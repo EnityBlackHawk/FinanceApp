@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.blackhawk.finance.databinding.FragmentDetailsBinding
 import com.blackhawk.finance.viewModel.EntryViewModel
+import com.blackhawk.finance.viewModel.EntryViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
@@ -18,7 +19,11 @@ class DetailsFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel : EntryViewModel by activityViewModels()
+    private val viewModel : EntryViewModel by activityViewModels {
+        EntryViewModelFactory(
+            (activity?.application as FinanceApplication).database.entryDao()
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
