@@ -39,6 +39,7 @@
                 android:id="@+id/entryName"
                 android:maxLines="1"
                 android:imeOptions="actionNext"
+                android:inputType="textCapSentences"
                 />
         </TableRow>
 
@@ -63,7 +64,9 @@
             android:checked="false"
             android:text="Entrada de valor"
             android:textSize="15sp"
-            app:trackTint="@color/primaryVariant" />
+            app:trackTint="@color/switchTrack"
+
+            />
 
         <Button
             android:id="@+id/saveBtn"

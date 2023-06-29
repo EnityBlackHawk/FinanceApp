@@ -10,6 +10,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.window.SplashScreenView
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.blackhawk.finance.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +25,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
     }
 

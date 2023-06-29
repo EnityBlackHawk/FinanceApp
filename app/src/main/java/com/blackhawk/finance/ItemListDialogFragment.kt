@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.blackhawk.finance.databinding.FragmentItemListDialogListDialogBinding
 import com.blackhawk.finance.model.Entry
 import com.blackhawk.finance.viewModel.EntryViewModel
+import com.blackhawk.finance.viewModel.EntryViewModelFactory
 import java.util.Date
 
 
@@ -26,7 +27,11 @@ class ItemListDialogFragment : BottomSheetDialogFragment() {
 
     private lateinit var errorColor: ColorStateList
 
-    private val viewModel: EntryViewModel by activityViewModels()
+    private val viewModel: EntryViewModel by activityViewModels {
+        EntryViewModelFactory(
+            (activity?.application as FinanceApplication).database.entryDao()
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,12 +86,13 @@ class ItemListDialogFragment : BottomSheetDialogFragment() {
 
 
         val entry = Entry(
+            0,
             name,
             value.toDouble(),
-            Date(),
+            Date().time,
             binding.isCredit.isChecked
         )
-        viewModel.add(entry)
+      viewModel.add(entry)
         findNavController().navigate(R.id.action_itemListDialogFragment_to_mainFragment)
     }
 

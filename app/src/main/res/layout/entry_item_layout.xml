@@ -9,6 +9,7 @@
     android:paddingLeft="10dp"
     android:paddingBottom="10dp"
     android:background="@drawable/rect"
+    android:backgroundTint="@color/cardBackground"
     android:layout_marginTop="10dp"
     >
 
@@ -16,8 +17,10 @@
         android:id="@+id/entryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="264dp"
+        android:maxLines="2"
         tools:text="Tag"
-        android:textColor="@color/primary"
+        android:textColor="@color/cardTitle"
         android:fontFamily="sans-serif-black"
         android:textSize="30sp"
         />
